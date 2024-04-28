@@ -1,0 +1,67 @@
+# This is a basic workflow to help you get started with Actions
+document.getElementById('addTaskButton').addEventListener('click', function() {
+    const input = document.getElementById('newTaskInput');
+    const newTask = input.value.trim();
+
+    if (newTask) {
+        const listItem = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        const text = document.createTextNode(' ' + newTask);
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+
+        deleteButton.onclick = function() {
+            listItem.remove();
+        };
+
+        checkbox.onchange = function() {
+            if (checkbox.checked) {
+                listItem.style.textDecoration = 'line-through';
+            } else {
+                listItem.style.textDecoration = 'none';
+            }
+        };
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(text);
+        listItem.appendChild(deleteButton);
+        document.getElementById('tasksList').appendChild(listItem);
+
+        input.value = '';  // Clear input after adding
+    }
+});
+
+class ApiFetcher {
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    async fetchData() {
+        try {
+            const response = await fetch(this.apiUrl);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching data: ', error);
+            return null;
+        }
+    }
+}
+
+document.getElementById('loadDataButton').addEventListener('click', async () => {
+    const fetcher = new ApiFetcher('https://jsonplaceholder.typicode.com/posts');
+    const data = await fetcher.fetchData();
+    const container = document.getElementById('dataContainer');
+
+    if (data) {
+        container.innerHTML = data.map(item => `<div>
+            <h3>${item.title}</h3>
+            <p>${item.body}</p>
+        </div>`).join('');
+    } else {
+        container.innerHTML = "<p>Failed to load data.</p>";
+    }
+});
