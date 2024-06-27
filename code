@@ -1,0 +1,51 @@
+/**
+ * v0 by Vercel.
+ * @see https://v0.dev/t/25cXRK4pzI3
+ * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+ */
+export default function Component() {
+  const personalInfo = [
+    {
+      name: "Vincent Chen",
+      title: "(14M)",
+      bio: "I am a 14 year old from Canada who is Asian Canadian and I enjoy playing chess.",
+      birthDate: "2010-02-25",
+      location: "Welland, ON, Canada",
+      achievements: ["I am 2300 bullet/rapid on lichess", "I won the Canadian Chess Challenge for Gr.3"],
+    },
+  ]
+  return (
+    <div className="px-4 py-6 md:px-6 md:py-12 lg:py-16">
+      <div className="prose prose-gray max-w-6xl mx-auto dark:prose-invert">
+        <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About Me</h1>
+        <div className="space-y-6">
+          <div className="grid gap-2">
+            <div className="flex items-baseline gap-2">
+              <h3 className="font-bold">{personalInfo[0].name}</h3>
+              <span className="text-muted-foreground">{personalInfo[0].title}</span>
+            </div>
+            <p>{personalInfo[0].bio}</p>
+            <div className="grid gap-2">
+              <div className="flex items-baseline gap-2">
+                <h4 className="font-medium">Birth Date</h4>
+                <span className="text-muted-foreground">{personalInfo[0].birthDate}</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <h4 className="font-medium">Location</h4>
+                <span className="text-muted-foreground">{personalInfo[0].location}</span>
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <h4 className="font-medium">Notable Achievements</h4>
+              <ul className="space-y-1">
+                {personalInfo[0].achievements.map((achievement, index) => (
+                  <li key={index}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
